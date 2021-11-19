@@ -2,7 +2,7 @@ import csv
 import math
 import sys
 
-y:u:v 4:1:1
+# y:u:v 4:1:1
 
 # Algorithm 1
 def calculate_mec(data, labels):
