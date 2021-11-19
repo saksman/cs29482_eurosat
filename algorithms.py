@@ -78,7 +78,7 @@ def calculate_capacity_progression(data, labels):
     mec : float
 
 	'''
-	sizes = [5, 10, 20, 40, 80, 100]
+	sizes = [.05, .1, .2, .4, .8, 1]
 	for size in sizes:
 		subset = getSample(size, labels)
 		mec = calculate_mec(subset)
