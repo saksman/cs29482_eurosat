@@ -11,12 +11,12 @@ def calculate_mec(data, labels):
 	x, and a label column of length n.
 
 	Parameters
-    ----------
-    data : array
-    
-    Returns
-    -------
-    mec : float
+	----------
+	data : array
+	
+	Returns
+	-------
+	mec : float
 
 	'''
 	assert len(data) == len(labels)
@@ -64,13 +64,13 @@ def calculate_capacity_progression(data, labels):
 	x, and a binary label column of length n.
 
 	Parameters
-    ----------
-    data : array
-    labels : array
-    
-    Returns
-    -------
-    mec : float
+	----------
+	data : array
+	labels : array
+	
+	Returns
+	-------
+	mec : float
 
 	'''
 	sizes = [.05, .1, .2, .4, .8, 1]
