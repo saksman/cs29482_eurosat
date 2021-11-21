@@ -2,20 +2,17 @@ import csv
 import math
 import sys
 
-# y:u:v 4:1:1
-
 # Algorithm 1
 def calculate_mec(data, labels):
 	'''
-	Calculate MEC needed for a binary classifier assuming weight
+	Calculate MEC needed for a classifier assuming weight
 	equilibrium (no gradient descent). 
 	Requires: data array of length n  which contains d-dim vectors 
-	x, and a binary label column of length n.
+	x, and a label column of length n.
 
 	Parameters
     ----------
     data : array
-    labels : array
     
     Returns
     -------
@@ -27,37 +24,35 @@ def calculate_mec(data, labels):
 	thresholds = 0
 	table = []
 	for i in range(len(data)):
-		# Sum up all data in the row and append the label
-		# What format should the data be in???
-		table.append(data[i].sum(), label[i])
+	  # Sum up all data in the row and append the label
+	  table.append([data[i].sum(), labels[i]])
+	# Sort by sum in reverse order
 	sortedtable = sorted(table, key=lambda x: x[0], reverse=True)
-	label_class = 0
 
-# 1, 1, 1, 1, 2, 2, 2, 3
-# for each class change, add threshold,
-# class change, not 0 is for comparison 
-
+	# Iterate through sorted table and compute thresholds
+	# by comparing class labels for each row and the prior row
+	# Initialize with first class label in list
+	class_label = sortedtable[0][1]
 	for i in range(len(sortedtable)):
-		if not sortedtable[i][1] == label_class:
-			label_class = sortedtable[i][1]
-			thresholds = thresholds + 1 
+	  if not sortedtable[i][1] == class_label:
+	    thresholds = thresholds + 1 
+	    class_label = sortedtable[i][1]
 
 	mec = math.log2(thresholds + 1)
 	return mec
 
-# What is i? What is j?
-# Can we update our project to be about a balanced subset of our dataset?
-
-def getSample(p, labels):
+def get_sample(p, data, labels):
 	'''
 	Return p percent of the data with corresponding labels.
 	'''
 	num_labels = len(labels)
 
-	subset_labels = p * num_labels
+	size = p * num_labels
+	
+	np.random.shuffle(data)
 	np.random.shuffle(labels)
 	
-	return labels[:subset_labels] 
+	return data[:size], labels[:size] 
 
 
 
@@ -80,6 +75,6 @@ def calculate_capacity_progression(data, labels):
 	'''
 	sizes = [.05, .1, .2, .4, .8, 1]
 	for size in sizes:
-		subset = getSample(size, labels)
-		mec = calculate_mec(subset)
+		sample_data, sample_labels = get_sample(size, data, labels)
+		mec = calculate_mec(sample_data, sample_labels)
 	return "MEC for " + size + "percent of the data: " + mec + " bits"
