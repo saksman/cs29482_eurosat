@@ -41,14 +41,27 @@ def calculate_mec(data, labels):
 	mec = math.log2(thresholds + 1)
 	return mec
 
-def get_sample(p, data, labels):
+def get_sample(p, data, labels, seed):
 	'''
 	Return p percent of the data with corresponding labels.
+
+	Parameters
+	----------
+	p : float in ragne [0, 1]
+	data : array
+	labels : array
+	seed  : int
+	
+	Returns
+	-------
+	data, labels : array, array
+
 	'''
 	num_labels = len(labels)
 
 	size = p * num_labels
 	
+	np.random.seed(seed)
 	np.random.shuffle(data)
 	np.random.shuffle(labels)
 	
@@ -75,6 +88,6 @@ def calculate_capacity_progression(data, labels):
 	'''
 	sizes = [.05, .1, .2, .4, .8, 1]
 	for size in sizes:
-		sample_data, sample_labels = get_sample(size, data, labels)
+		sample_data, sample_labels = get_sample(size, data, labels, 1234)
 		mec = calculate_mec(sample_data, sample_labels)
 	return "MEC for " + size + "percent of the data: " + mec + " bits"
