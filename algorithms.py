@@ -7,12 +7,12 @@ def calculate_mec(data, labels):
 	'''
 	Calculate MEC needed for a classifier assuming weight
 	equilibrium (no gradient descent). 
-	Requires: data array of length n  which contains d-dim vectors 
-	x, and a label column of length n.
+	Requires: data array of length and a label column of length n.
 
 	Parameters
 	----------
 	data : array
+	labels : array
 	
 	Returns
 	-------
@@ -58,9 +58,8 @@ def get_sample(p, data, labels, seed):
 
 	'''
 	num_labels = len(labels)
+	size = int(p * num_labels)
 
-	size = p * num_labels
-	
 	np.random.seed(seed)
 	np.random.shuffle(data)
 	np.random.shuffle(labels)
@@ -68,13 +67,11 @@ def get_sample(p, data, labels, seed):
 	return data[:size], labels[:size] 
 
 
-
 # Algorithm 2 
 def calculate_capacity_progression(data, labels):
 	'''
 	Calculate capacity progression for the Equilibrium Machine Learner.
-	Requires: data array of length n  which contains d-dim vectors 
-	x, and a binary label column of length n.
+	Requires: data array of length n and a label column of length n.
 
 	Parameters
 	----------
@@ -84,10 +81,9 @@ def calculate_capacity_progression(data, labels):
 	Returns
 	-------
 	mec : float
-
 	'''
 	sizes = [.05, .1, .2, .4, .8, 1]
 	for size in sizes:
 		sample_data, sample_labels = get_sample(size, data, labels, 1234)
 		mec = calculate_mec(sample_data, sample_labels)
-	return "MEC for " + size + "percent of the data: " + mec + " bits"
+		print("MEC for " + str(int(size * 100)) + " percent of the data: " + str(round(mec, 2)) + " bits")
