@@ -88,7 +88,7 @@ def calculate_capacity_progression(data, labels):
 	for size in sizes:
 		sample_data, sample_labels = get_sample(size, data, labels, 1234)
 		mec = calculate_mec(sample_data, sample_labels)
-		capacities[size] = mec
+		capacities[size] = mec * 100
 
 		print("MEC for " + str(int(size * 100)) + " percent of the data: " + str(round(mec, 2)) + " bits")
 
