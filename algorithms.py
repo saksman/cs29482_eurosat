@@ -66,12 +66,12 @@ def get_sample(p, data, labels, seed):
 	
 	return data[:size], labels[:size] 
 
-
 # Algorithm 2 
 def calculate_capacity_progression(data, labels):
 	'''
 	Calculate capacity progression for the Equilibrium Machine Learner.
-	Requires: data array of length n and a label column of length n.
+	Requires: data array of length n  which contains d-dim vectors 
+	x, and a binary label column of length n.
 
 	Parameters
 	----------
@@ -80,10 +80,16 @@ def calculate_capacity_progression(data, labels):
 	
 	Returns
 	-------
-	mec : float
+	capacities : dictionary
+
 	'''
-	sizes = [.05, .1, .2, .4, .8, 1]
+	sizes = [0, .05, .1, .2, .4, .8, 1]
+	capacities = {}
 	for size in sizes:
 		sample_data, sample_labels = get_sample(size, data, labels, 1234)
 		mec = calculate_mec(sample_data, sample_labels)
+		capacities[size] = mec
+
 		print("MEC for " + str(int(size * 100)) + " percent of the data: " + str(round(mec, 2)) + " bits")
+
+	return capacities	
