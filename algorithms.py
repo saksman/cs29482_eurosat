@@ -83,7 +83,7 @@ def calculate_capacity_progression(data, labels):
 	capacities : dictionary
 
 	'''
-	sizes = [0, .05, .1, .2, .4, .8, 1]
+	sizes = [.05, .1, .2, .4, .8, 1]
 	capacities = {}
 	for size in sizes:
 		sample_data, sample_labels = get_sample(size, data, labels, 1234)
