@@ -23,7 +23,7 @@ def calculate_mec(data, labels):
 	assert len(data) == len(labels)
 
 	# d = num dimensions in data
-	d = data.shape[1]
+	d = data[0].shape[0]
 	thresholds = 0
 	table = []
 	for i in range(len(data)):
