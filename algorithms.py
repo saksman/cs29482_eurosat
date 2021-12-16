@@ -7,20 +7,23 @@ def calculate_mec(data, labels):
 	'''
 	Calculate MEC needed for a classifier assuming weight
 	equilibrium (no gradient descent). 
-	Requires: data array of length and a label column of length n.
+	Requires: data array of length n  which contains d-dim vectors 
+	x, and a label column of length n.
 
 	Parameters
 	----------
 	data : array
 	labels : array
-	
-	Returns
-	-------
-	mec : float
+    
+    Returns
+    -------
+    mec : float
 
 	'''
 	assert len(data) == len(labels)
 
+	# d = num dimensions in data
+	d = data.shape[1]
 	thresholds = 0
 	table = []
 	for i in range(len(data)):
@@ -38,7 +41,7 @@ def calculate_mec(data, labels):
 	    thresholds = thresholds + 1 
 	    class_label = sortedtable[i][1]
 
-	mec = math.log2(thresholds + 1)
+	mec = math.log2(thresholds + 1) * d
 	return mec
 
 def get_sample(p, data, labels, seed):
@@ -50,11 +53,11 @@ def get_sample(p, data, labels, seed):
 	p : float in ragne [0, 1]
 	data : array
 	labels : array
-	seed  : int
-	
-	Returns
-	-------
-	data, labels : array, array
+    seed  : int
+
+    Returns
+    -------
+    data, labels : array, array
 
 	'''
 	num_labels = len(labels)
@@ -66,6 +69,7 @@ def get_sample(p, data, labels, seed):
 	
 	return data[:size], labels[:size] 
 
+
 # Algorithm 2 
 def calculate_capacity_progression(data, labels):
 	'''
@@ -74,13 +78,13 @@ def calculate_capacity_progression(data, labels):
 	x, and a binary label column of length n.
 
 	Parameters
-	----------
-	data : array
-	labels : array
-	
-	Returns
-	-------
-	capacities : dictionary
+    ----------
+    data : array
+    labels : array
+    
+    Returns
+    -------
+    capacities : dictionary
 
 	'''
 	sizes = [.05, .1, .2, .4, .8, 1]
